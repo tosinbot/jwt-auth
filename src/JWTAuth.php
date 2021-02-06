@@ -122,15 +122,9 @@ class JWTAuth
      */
     public function authenticate($token = false)
     {   
-        if(strpos($this->request->url(), 'api/handyman')){
-            Config::set('auth.providers.customer.model', \App\ServiceProvider::class);
-        }
-        if(strpos($this->request->url(), 'api/vendor')){
-            Config::set('auth.providers.customer.model', \App\Vendor::class);
-        }
-        if(strpos($this->request->url(), 'api/admin')){
-            Config::set('auth.providers.customer.model', \App\Admin::class);
-        }
+        if(strpos($this->request->url(), 'api/customer') || strpos($this->request->url(), 'api/buyer')){	
+            Config::set('auth.providers.user.model', \App\Customer::class);	
+        }	
         
         $id = $this->getPayload($token)->get('sub');
 
